@@ -1,0 +1,245 @@
+﻿@model IsTakipProjesi.Models.TaskList
+
+@{
+}
+
+<link rel="stylesheet" href="~/richtexteditor/rte_theme_default.css" />
+<script type="text/javascript" src="~/richtexteditor/rte.js"></script>
+<script type="text/javascript" src="~/richtexteditor/plugins/all_plugins.js"></script>
+
+<div class="content-wrapper">
+
+    <section class="content">
+        <br />
+        <div class="container-fluid">
+
+            <!-- Default box -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        @Model.IsAdi Detayları
+                        @if (@Model.Durum == "Tamamlandı")
+                        {
+                            <span class="badge badge-success">@Model.Durum</span>
+                        }
+                        else if (@Model.Durum == "Aktif")
+                        {
+                            <span class="badge badge-info">@Model.Durum</span>
+                        }
+                        else if (@Model.Durum == "Bekliyor")
+                        {
+                            <span class="badge badge-primary">@Model.Durum</span>
+                        }
+                        else if (@Model.Durum == "Askıya Alındı")
+                        {
+                            <span class="badge badge-secondary">@Model.Durum</span>
+                        }
+                        else
+                        {
+                            @Model.Durum
+                        }
+                    </h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modal-durum">
+                            Durum Değiştir
+                        </button>
+                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-xl">
+                            Yorum Yap
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-4 order-2 order-md-1">
+                            <h5>Açıklama</h5>
+                            <p class="text-muted">@Model.Aciklama</p>
+
+                            <br>
+                            @if (Model.BaslangicTarihi != null)
+                            {
+                                <small>Başlangıç Tarihi: @Model.BaslangicTarihi.ToString("dd.MM.yyyy HH.mm")</small><br />
+                            }
+                            @if (Model.BitisTarihi != null)
+                            {
+                                <small>Bitiş Tarihi: @Model.BitisTarihi?.ToString("dd.MM.yyyy HH.mm")</small>
+                            }
+                            <hr />
+                            <div class="text-muted">
+                                <h5 class="mt-5 text-muted">Üyeler</h5>
+                                <table class="table table-striped projects">
+                                    <tbody>
+                                        @foreach (var member in Model.TaskMembers.Where(m => !m.IsDeleted))
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <img alt="@member.UserID" class="table-avatar" src="~/images/profile-placeholder.png">
+                                                </td>
+                                                <td>
+                                                    @member.UserID
+                                                    @if (Model.CreateUserID == member.UserID)
+                                                    {
+                                                        <i>(Oluşturan)</i>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+
+                                <h5 class="mt-5 text-muted">Onaycılar</h5>
+                                <table class="table table-striped projects">
+                                    <tbody>
+                                        @foreach (var member in Model.TaskMembers.Where(m => !m.IsDeleted && m.OnayDurum))
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <img alt="@member.UserID" class="table-avatar" src="~/images/profile-placeholder.png">
+                                                </td>
+                                                <td>
+                                                    @member.UserID
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-12 col-lg-8 order-1 order-md-2">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h4>Yorumlar</h4>
+                                    @foreach (var comment in Model.Comments.Where(c => !c.IsDeleted))
+                                    {
+                                        <div class="post">
+                                            <div class="user-block">
+                                                <img class="img-circle img-bordered-sm" src="~/images/profile-placeholder.png" alt="@comment.UserID">
+                                                <span class="username">
+                                                    <a href="#">@comment.User.FirstName @comment.User.LastName</a>
+                                                </span>
+                                                <span class="description">@comment.Datetime.ToString("dd.MM.yyyy HH:mm")</span>
+                                            </div>
+                                            <!-- /.user-block -->
+                                            <p>
+                                                @Html.Raw(comment.Comment)
+                                            </p>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <div class="modal fade" id="modal-xl">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">@Model.IsAdi Yorum Yap</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form asp-action="YorumEkle" method="post">
+                            <input type="hidden" name="TaskID" value="@Model.TaskID" />
+                            <div class="modal-body">
+                                <div id="div_editor1">
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+                                <input class="btn btn-primary" type="submit" value="Yorum Yap" />
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <div class="modal fade" id="modal-durum">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <form asp-action="DurumDegistir" method="post">
+                            <input type="hidden" name="TaskID" value="@Model.TaskID" />
+                            <div class="modal-header">
+                                <h4 class="modal-title">@Model.IsAdi Durum Değiştir</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStatus">Durumu</label>
+                                <select id="inputStatus" name="inputStatus" class="form-control custom-select">
+                                    <option>Tamamlandı</option>
+                                    <option>Aktif</option>
+                                    <option>Bekliyor</option>
+                                    <option>Askıya Alındı</option>
+                                    <option>Sil</option>
+                                </select>
+                                <div class="modal-footer justify-content-between">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+                                    <input type="submit" value="Kaydet" class="btn btn-primary" id="durumkaydet">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <div class="modal fade" id="modal-uyeler">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">@Model.IsAdi Üyeleri Düzenle</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <input type="text" id="inputName" value="@Model.IsAdi" class="form-control" disabled>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Üye Ekle</label>
+                            <div class="col-sm-9">
+                                <select class="select2 select2-hidden-accessible" multiple="" data-placeholder="Üye Ekle" style="width: 100%;" tabindex="-1" aria-hidden="true" id="Uyeler" name="Uyeler">
+                                    @foreach (var user in ViewBag.Users)
+                                    {
+                                        //var selected = Model.TaskMembers.Any(m => m.UserID == user.UserId && !m.IsDeleted) ? "selected='selected'" : "";
+                                        //<option value="@user.UserId" @Html.Raw(selected)>@user.FullName (@user.Username)</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+                            <input type="submit" value="Kaydet" class="btn btn-primary" onClick="UyeKaydet(@Model.TaskID)" id="uyekaydet">
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+
+    var editor1 = new RichTextEditor("#div_editor1");
+
+    function getContent() {
+        var editorContent = editor1.getHTMLCode();
+        var hiddenField = document.createElement("input");
+        hiddenField.setAttribute("type", "hidden");
+        hiddenField.setAttribute("name", "editorContent");
+        hiddenField.setAttribute("value", editorContent);
+        document.querySelector("form").appendChild(hiddenField);
+    }
+
+    document.querySelector("form").addEventListener("submit", getContent);
+
+  
+</script>

@@ -1,0 +1,339 @@
+﻿@import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
+
+@function p($push) {
+    @return $px * $push;
+}
+
+$font: "Press Start 2p", monospace;
+$px: 4px;
+$spd: 2s;
+$pos: 100%;
+$bp: 500px;
+$margin: 18px;
+$pacman-size: p(13);
+$pc: var(--pacman-color);
+$gc: var(--ghost-color);
+$gec: var(--ghost-eye-color);
+$gpc: var(--ghost-pupil-color);
+$grc: var(--ghost-run-color);
+
+:root {
+    --bg-color: black;
+    --border-color: #1500c5;
+    --ghost-color: #ea82e5;
+    --ghost-eye-color: white;
+    --ghost-run-color: #1b00ff;
+    --ghost-pupil-color: #1500c5;
+    --pacman-color: #fdff00;
+    --pellet-color: #ebae9f;
+    --text-color: white;
+}
+
+[v-cloak] {
+    display: none;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: $margin;
+    font-family: $font;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-color);
+    background: var(--bg-color);
+}
+
+p {
+    line-height: 1.6;
+}
+
+form {
+    overflow: hidden;
+}
+
+.logged-in {
+    text-align: center;
+}
+
+.scene-wrapper {
+    position: relative;
+}
+
+label {
+    display: block;
+    font-size: p(4);
+    line-height: 1.4;
+    margin-bottom: $margin / 2;
+}
+
+input {
+    margin-bottom: $margin * 2;
+    padding: p(5) 0;
+    width: 100%;
+    font-family: $font;
+    font-size: p(7);
+    text-transform: uppercase;
+    color: var(--pellet-color);
+    background-color: transparent;
+    border: $px double var(--border-color);
+    border-left-width: 0;
+    border-right-width: 0;
+    &[type="password"]
+
+{
+    letter-spacing: $margin;
+}
+
+&[type="button"] {
+    cursor: pointer;
+    border: none;
+    background-color: var(--button-color);
+    font-size: p(5);
+
+    @media (min-width: $bp) {
+        font-size: p(6);
+    }
+
+    &:hover
+
+{
+    color: white;
+}
+
+}
+
+&:focus {
+    border-color: var(--pellet-color);
+    outline: none;
+}
+
+&.invalid {
+    animation: invalid-shake 0.4s ease-out;
+}
+
+}
+
+.input-cover {
+    position: absolute;
+    top: p(3);
+    left: -$pacman-size;
+    width: calc(100% + #{$pacman-size});
+    height: $pacman-size;
+    background-color: var(--bg-color);
+    z-index: 1;
+}
+
+.pac-wrapper,
+.ghost-wrapper {
+    position: absolute;
+    top: p(3);
+    left: 0;
+    width: 100%;
+    height: p(13);
+    overflow: hidden;
+    z-index: 2;
+}
+
+.ghost-wrapper {
+    transform: translateX(100%);
+}
+
+.ghost,
+.pacman {
+    position: absolute;
+    top: 0;
+    width: $px;
+    height: $px;
+    z-index: 2;
+    transform-origin: 100% 100%;
+}
+
+.ghost {
+    left: 0;
+}
+
+.pacman {
+    right: $pacman-size;
+    animation: waka 0.3s steps(1) infinite forwards;
+    &:before, &:after
+
+{
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+&:before {
+    bottom: $pacman-size;
+}
+
+&:after {
+    bottom: $pacman-size * 2;
+}
+
+}
+
+// Animations
+@keyframes waka {
+    0%
+
+{
+    margin-top: 0;
+}
+
+25% {
+    margin-top: $pacman-size;
+}
+
+50% {
+    margin-top: $pacman-size * 2;
+}
+
+75% {
+    margin-top: $pacman-size;
+}
+
+100% {
+    margin-top: 0;
+}
+
+}
+
+@keyframes invalid-shake {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    10% {
+        transform: translate(4px, 2px);
+    }
+
+    20% {
+        transform: translate(-4px, -2px);
+    }
+
+    30% {
+        transform: translate(6px, 3px);
+    }
+
+    40% {
+        transform: translate(-6px, -3px);
+    }
+
+    50% {
+        transform: translate(6px, 3px);
+    }
+
+    60% {
+        transform: translate(-4px, -2px);
+    }
+
+    70% {
+        transform: translate(4px, 2px);
+    }
+
+    80% {
+        transform: translate(2px, -1px);
+    }
+
+    90% {
+        transform: translate(-2px, 1px);
+    }
+
+    100% {
+        transform: translate(0);
+    }
+}
+
+.pacman-invalid-enter-active,
+.pacman-invalid-leave-active,
+.pacman-success-enter-active,
+.cover-enter-active {
+    transition: transform $spd linear;
+}
+
+.pacman-success-leave-active {
+    transition: transform ($spd / 1.2) ($spd / 2) linear;
+}
+
+.ghost-enter-active {
+    transition: transform ($spd / 1.1) ($spd / 4) linear;
+}
+
+.pacman-invalid-enter,
+.pacman-invalid-leave-to,
+.pacman-success-enter,
+.pacman-success-leave-to,
+.pacman-enter,
+.cover-enter,
+.cover-leave-to {
+    transform: translateX(-$pos);
+}
+
+.ghost-enter-to {
+    transform: translateX(-$pacman-size * 2);
+}
+
+.cover-enter-to,
+.cover-leave-to {
+    transform: translateX($pacman-size);
+}
+
+.pacman-invalid-enter-to,
+.pacman-success-enter-to {
+    transform: translateX($pacman-size * 2);
+}
+
+.ghost-enter {
+    transform: translateX($pos);
+}
+
+.pacman-invalid-leave-to,
+.pacman-success-leave-to {
+    .pacman
+
+{
+    transform: scaleX(-1);
+}
+
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.4s ease-out;
+}
+
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
+}
+
+// Box-shadow sprites
+.pacman {
+    box-shadow: p(4) p(0) $pc, p(5) p(0) $pc, p(6) p(0) $pc, p(7) p(0) $pc, p(8) p(0) $pc, p(9) p(0) $pc, p(2) p(1) $pc, p(3) p(1) $pc, p(4) p(1) $pc, p(5) p(1) $pc, p(6) p(1) $pc, p(7) p(1) $pc, p(8) p(1) $pc, p(9) p(1) $pc, p(10) p(1) $pc, p(11) p(1) $pc, p(1) p(2) $pc, p(2) p(2) $pc, p(3) p(2) $pc, p(4) p(2) $pc, p(5) p(2) $pc, p(6) p(2) $pc, p(7) p(2) $pc, p(8) p(2) $pc, p(9) p(2) $pc, p(10) p(2) $pc, p(11) p(2) $pc, p(12) p(2) $pc, p(1) p(3) $pc, p(2) p(3) $pc, p(3) p(3) $pc, p(4) p(3) $pc, p(5) p(3) $pc, p(6) p(3) $pc, p(7) p(3) $pc, p(8) p(3) $pc, p(9) p(3) $pc, p(10) p(3) $pc, p(11) p(3) $pc, p(12) p(3) $pc, p(0) p(4) $pc, p(1) p(4) $pc, p(2) p(4) $pc, p(3) p(4) $pc, p(4) p(4) $pc, p(5) p(4) $pc, p(6) p(4) $pc, p(7) p(4) $pc, p(8) p(4) $pc, p(9) p(4) $pc, p(10) p(4) $pc, p(11) p(4) $pc, p(12) p(4) $pc, p(13) p(4) $pc, p(0) p(5) $pc, p(1) p(5) $pc, p(2) p(5) $pc, p(3) p(5) $pc, p(4) p(5) $pc, p(5) p(5) $pc, p(6) p(5) $pc, p(7) p(5) $pc, p(8) p(5) $pc, p(9) p(5) $pc, p(10) p(5) $pc, p(11) p(5) $pc, p(12) p(5) $pc, p(13) p(5) $pc, p(0) p(6) $pc, p(1) p(6) $pc, p(2) p(6) $pc, p(3) p(6) $pc, p(4) p(6) $pc, p(5) p(6) $pc, p(6) p(6) $pc, p(7) p(6) $pc, p(8) p(6) $pc, p(9) p(6) $pc, p(10) p(6) $pc, p(11) p(6) $pc, p(12) p(6) $pc, p(13) p(6) $pc, p(0) p(7) $pc, p(1) p(7) $pc, p(2) p(7) $pc, p(3) p(7) $pc, p(4) p(7) $pc, p(5) p(7) $pc, p(6) p(7) $pc, p(7) p(7) $pc, p(8) p(7) $pc, p(9) p(7) $pc, p(10) p(7) $pc, p(11) p(7) $pc, p(12) p(7) $pc, p(13) p(7) $pc, p(0) p(8) $pc, p(1) p(8) $pc, p(2) p(8) $pc, p(3) p(8) $pc, p(4) p(8) $pc, p(5) p(8) $pc, p(6) p(8) $pc, p(7) p(8) $pc, p(8) p(8) $pc, p(9) p(8) $pc, p(10) p(8) $pc, p(11) p(8) $pc, p(12) p(8) $pc, p(13) p(8) $pc, p(1) p(9) $pc, p(2) p(9) $pc, p(3) p(9) $pc, p(4) p(9) $pc, p(5) p(9) $pc, p(6) p(9) $pc, p(7) p(9) $pc, p(8) p(9) $pc, p(9) p(9) $pc, p(10) p(9) $pc, p(11) p(9) $pc, p(12) p(9) $pc, p(1) p(10) $pc, p(2) p(10) $pc, p(3) p(10) $pc, p(4) p(10) $pc, p(5) p(10) $pc, p(6) p(10) $pc, p(7) p(10) $pc, p(8) p(10) $pc, p(9) p(10) $pc, p(10) p(10) $pc, p(11) p(10) $pc, p(12) p(10) $pc, p(2) p(11) $pc, p(3) p(11) $pc, p(4) p(11) $pc, p(5) p(11) $pc, p(6) p(11) $pc, p(7) p(11) $pc, p(8) p(11) $pc, p(9) p(11) $pc, p(10) p(11) $pc, p(11) p(11) $pc, p(4) p(12) $pc, p(5) p(12) $pc, p(6) p(12) $pc, p(7) p(12) $pc, p(8) p(12) $pc, p(9) p(12) $pc;
+}
+
+.pacman:before {
+    box-shadow: p(4) p(0) $pc, p(5) p(0) $pc, p(6) p(0) $pc, p(7) p(0) $pc, p(8) p(0) $pc, p(9) p(0) $pc, p(2) p(1) $pc, p(3) p(1) $pc, p(4) p(1) $pc, p(5) p(1) $pc, p(6) p(1) $pc, p(7) p(1) $pc, p(8) p(1) $pc, p(9) p(1) $pc, p(10) p(1) $pc, p(11) p(1) $pc, p(1) p(2) $pc, p(2) p(2) $pc, p(3) p(2) $pc, p(4) p(2) $pc, p(5) p(2) $pc, p(6) p(2) $pc, p(7) p(2) $pc, p(8) p(2) $pc, p(9) p(2) $pc, p(10) p(2) $pc, p(11) p(2) $pc, p(12) p(2) $pc, p(1) p(3) $pc, p(2) p(3) $pc, p(3) p(3) $pc, p(4) p(3) $pc, p(5) p(3) $pc, p(6) p(3) $pc, p(7) p(3) $pc, p(8) p(3) $pc, p(9) p(3) $pc, p(10) p(3) $pc, p(11) p(3) $pc, p(12) p(3) $pc, p(0) p(4) $pc, p(1) p(4) $pc, p(2) p(4) $pc, p(3) p(4) $pc, p(4) p(4) $pc, p(5) p(4) $pc, p(6) p(4) $pc, p(7) p(4) $pc, p(8) p(4) $pc, p(9) p(4) $pc, p(10) p(4) $pc, p(0) p(5) $pc, p(1) p(5) $pc, p(2) p(5) $pc, p(3) p(5) $pc, p(4) p(5) $pc, p(5) p(5) $pc, p(6) p(5) $pc, p(7) p(5) $pc, p(0) p(6) $pc, p(1) p(6) $pc, p(2) p(6) $pc, p(3) p(6) $pc, p(4) p(6) $pc, p(0) p(7) $pc, p(1) p(7) $pc, p(2) p(7) $pc, p(3) p(7) $pc, p(4) p(7) $pc, p(5) p(7) $pc, p(6) p(7) $pc, p(7) p(7) $pc, p(0) p(8) $pc, p(1) p(8) $pc, p(2) p(8) $pc, p(3) p(8) $pc, p(4) p(8) $pc, p(5) p(8) $pc, p(6) p(8) $pc, p(7) p(8) $pc, p(8) p(8) $pc, p(9) p(8) $pc, p(10) p(8) $pc, p(1) p(9) $pc, p(2) p(9) $pc, p(3) p(9) $pc, p(4) p(9) $pc, p(5) p(9) $pc, p(6) p(9) $pc, p(7) p(9) $pc, p(8) p(9) $pc, p(9) p(9) $pc, p(10) p(9) $pc, p(11) p(9) $pc, p(12) p(9) $pc, p(1) p(10) $pc, p(2) p(10) $pc, p(3) p(10) $pc, p(4) p(10) $pc, p(5) p(10) $pc, p(6) p(10) $pc, p(7) p(10) $pc, p(8) p(10) $pc, p(9) p(10) $pc, p(10) p(10) $pc, p(11) p(10) $pc, p(12) p(10) $pc, p(2) p(11) $pc, p(3) p(11) $pc, p(4) p(11) $pc, p(5) p(11) $pc, p(6) p(11) $pc, p(7) p(11) $pc, p(8) p(11) $pc, p(9) p(11) $pc, p(10) p(11) $pc, p(11) p(11) $pc, p(4) p(12) $pc, p(5) p(12) $pc, p(6) p(12) $pc, p(7) p(12) $pc, p(8) p(12) $pc, p(9) p(12) $pc;
+}
+
+.pacman:after {
+    box-shadow: p(4) p(0) $pc, p(5) p(0) $pc, p(6) p(0) $pc, p(7) p(0) $pc, p(8) p(0) $pc, p(9) p(0) $pc, p(2) p(1) $pc, p(3) p(1) $pc, p(4) p(1) $pc, p(5) p(1) $pc, p(6) p(1) $pc, p(7) p(1) $pc, p(8) p(1) $pc, p(9) p(1) $pc, p(1) p(2) $pc, p(2) p(2) $pc, p(3) p(2) $pc, p(4) p(2) $pc, p(5) p(2) $pc, p(6) p(2) $pc, p(7) p(2) $pc, p(8) p(2) $pc, p(1) p(3) $pc, p(2) p(3) $pc, p(3) p(3) $pc, p(4) p(3) $pc, p(5) p(3) $pc, p(6) p(3) $pc, p(7) p(3) $pc, p(0) p(4) $pc, p(1) p(4) $pc, p(2) p(4) $pc, p(3) p(4) $pc, p(4) p(4) $pc, p(5) p(4) $pc, p(6) p(4) $pc, p(0) p(5) $pc, p(1) p(5) $pc, p(2) p(5) $pc, p(3) p(5) $pc, p(4) p(5) $pc, p(5) p(5) $pc, p(0) p(6) $pc, p(1) p(6) $pc, p(2) p(6) $pc, p(3) p(6) $pc, p(4) p(6) $pc, p(0) p(7) $pc, p(1) p(7) $pc, p(2) p(7) $pc, p(3) p(7) $pc, p(4) p(7) $pc, p(5) p(7) $pc, p(0) p(8) $pc, p(1) p(8) $pc, p(2) p(8) $pc, p(3) p(8) $pc, p(4) p(8) $pc, p(5) p(8) $pc, p(6) p(8) $pc, p(1) p(9) $pc, p(2) p(9) $pc, p(3) p(9) $pc, p(4) p(9) $pc, p(5) p(9) $pc, p(6) p(9) $pc, p(7) p(9) $pc, p(1) p(10) $pc, p(2) p(10) $pc, p(3) p(10) $pc, p(4) p(10) $pc, p(5) p(10) $pc, p(6) p(10) $pc, p(7) p(10) $pc, p(8) p(10) $pc, p(2) p(11) $pc, p(3) p(11) $pc, p(4) p(11) $pc, p(5) p(11) $pc, p(6) p(11) $pc, p(7) p(11) $pc, p(8) p(11) $pc, p(9) p(11) $pc, p(4) p(12) $pc, p(5) p(12) $pc, p(6) p(12) $pc, p(7) p(12) $pc, p(8) p(12) $pc, p(9) p(12) $pc;
+}
+
+.ghost {
+    box-shadow: p(5) p(0) $gc, p(6) p(0) $gc, p(7) p(0) $gc, p(8) p(0) $gc, p(3) p(1) $gc, p(4) p(1) $gc, p(5) p(1) $gc, p(6) p(1) $gc, p(7) p(1) $gc, p(8) p(1) $gc, p(9) p(1) $gc, p(10) p(1) $gc, p(2) p(2) $gc, p(3) p(2) $gc, p(4) p(2) $gc, p(5) p(2) $gc, p(6) p(2) $gc, p(7) p(2) $gc, p(8) p(2) $gc, p(9) p(2) $gc, p(10) p(2) $gc, p(11) p(2) $gc, p(1) p(3) $gc, p(2) p(3) $gec, p(3) p(3) $gec, p(4) p(3) $gc, p(5) p(3) $gc, p(6) p(3) $gc, p(7) p(3) $gc, p(8) p(3) $gec, p(9) p(3) $gec, p(10) p(3) $gc, p(11) p(3) $gc, p(12) p(3) $gc, p(1) p(4) $gec, p(2) p(4) $gec, p(3) p(4) $gec, p(4) p(4) $gec, p(5) p(4) $gc, p(6) p(4) $gc, p(7) p(4) $gec, p(8) p(4) $gec, p(9) p(4) $gec, p(10) p(4) $gec, p(11) p(4) $gc, p(12) p(4) $gc, p(1) p(5) $gpc, p(2) p(5) $gpc, p(3) p(5) $gec, p(4) p(5) $gec, p(5) p(5) $gc, p(6) p(5) $gc, p(7) p(5) $gpc, p(8) p(5) $gpc, p(9) p(5) $gec, p(10) p(5) $gec, p(11) p(5) $gc, p(12) p(5) $gc, p(0) p(6) $gc, p(1) p(6) $gpc, p(2) p(6) $gpc, p(3) p(6) $gec, p(4) p(6) $gec, p(5) p(6) $gc, p(6) p(6) $gc, p(7) p(6) $gpc, p(8) p(6) $gpc, p(9) p(6) $gec, p(10) p(6) $gec, p(11) p(6) $gc, p(12) p(6) $gc, p(13) p(6) $gc, p(0) p(7) $gc, p(1) p(7) $gc, p(2) p(7) $gec, p(3) p(7) $gec, p(4) p(7) $gc, p(5) p(7) $gc, p(6) p(7) $gc, p(7) p(7) $gc, p(8) p(7) $gec, p(9) p(7) $gec, p(10) p(7) $gc, p(11) p(7) $gc, p(12) p(7) $gc, p(13) p(7) $gc, p(0) p(8) $gc, p(1) p(8) $gc, p(2) p(8) $gc, p(3) p(8) $gc, p(4) p(8) $gc, p(5) p(8) $gc, p(6) p(8) $gc, p(7) p(8) $gc, p(8) p(8) $gc, p(9) p(8) $gc, p(10) p(8) $gc, p(11) p(8) $gc, p(12) p(8) $gc, p(13) p(8) $gc, p(0) p(9) $gc, p(1) p(9) $gc, p(2) p(9) $gc, p(3) p(9) $gc, p(4) p(9) $gc, p(5) p(9) $gc, p(6) p(9) $gc, p(7) p(9) $gc, p(8) p(9) $gc, p(9) p(9) $gc, p(10) p(9) $gc, p(11) p(9) $gc, p(11) p(9) $gc, p(12) p(9) $gc, p(13) p(9) $gc, p(0) p(10) $gc, p(1) p(10) $gc, p(2) p(10) $gc, p(3) p(10) $gc, p(4) p(10) $gc, p(5) p(10) $gc, p(6) p(10) $gc, p(7) p(10) $gc, p(8) p(10) $gc, p(9) p(10) $gc, p(10) p(10) $gc, p(11) p(10) $gc, p(11) p(10) $gc, p(12) p(10) $gc, p(13) p(10) $gc, p(0) p(11) $gc, p(1) p(11) $gc, p(3) p(11) $gc, p(4) p(11) $gc, p(5) p(11) $gc, p(8) p(11) $gc, p(9) p(11) $gc, p(10) p(11) $gc, p(12) p(11) $gc, p(13) p(11) $gc, p(0) p(12) $gc, p(4) p(12) $gc, p(5) p(12) $gc, p(8) p(12) $gc, p(9) p(12) $gc, p(13) p(12) $gc;
+}
+
+    .ghost.runaway {
+        box-shadow: p(5) p(0) $grc, p(6) p(0) $grc, p(7) p(0) $grc, p(8) p(0) $grc, p(3) p(1) $grc, p(4) p(1) $grc, p(5) p(1) $grc, p(6) p(1) $grc, p(7) p(1) $grc, p(8) p(1) $grc, p(9) p(1) $grc, p(10) p(1) $grc, p(2) p(2) $grc, p(3) p(2) $grc, p(4) p(2) $grc, p(5) p(2) $grc, p(6) p(2) $grc, p(7) p(2) $grc, p(8) p(2) $grc, p(9) p(2) $grc, p(10) p(2) $grc, p(11) p(2) $grc, p(1) p(3) $grc, p(2) p(3) $grc, p(3) p(3) $grc, p(4) p(3) $grc, p(5) p(3) $grc, p(6) p(3) $grc, p(7) p(3) $grc, p(8) p(3) $grc, p(9) p(3) $grc, p(10) p(3) $grc, p(11) p(3) $grc, p(12) p(3) $grc, p(1) p(4) $grc, p(2) p(4) $grc, p(3) p(4) $grc, p(4) p(4) $gec, p(5) p(4) $gec, p(6) p(4) $grc, p(7) p(4) $grc, p(8) p(4) $gec, p(9) p(4) $gec, p(10) p(4) $grc, p(11) p(4) $grc, p(12) p(4) $grc, p(1) p(5) $grc, p(2) p(5) $grc, p(3) p(5) $grc, p(4) p(5) $gec, p(5) p(5) $gec, p(6) p(5) $grc, p(7) p(5) $grc, p(8) p(5) $gec, p(9) p(5) $gec, p(10) p(5) $grc, p(11) p(5) $grc, p(12) p(5) $grc, p(0) p(6) $grc, p(1) p(6) $grc, p(2) p(6) $grc, p(3) p(6) $grc, p(4) p(6) $grc, p(5) p(6) $grc, p(6) p(6) $grc, p(7) p(6) $grc, p(8) p(6) $grc, p(9) p(6) $grc, p(10) p(6) $grc, p(11) p(6) $grc, p(12) p(6) $grc, p(13) p(6) $grc, p(0) p(7) $grc, p(1) p(7) $grc, p(2) p(7) $grc, p(3) p(7) $grc, p(4) p(7) $grc, p(5) p(7) $grc, p(6) p(7) $grc, p(7) p(7) $grc, p(8) p(7) $grc, p(9) p(7) $grc, p(10) p(7) $grc, p(11) p(7) $grc, p(12) p(7) $grc, p(13) p(7) $grc, p(0) p(8) $grc, p(1) p(8) $grc, p(2) p(8) $gec, p(3) p(8) $gec, p(4) p(8) $grc, p(5) p(8) $grc, p(6) p(8) $gec, p(7) p(8) $gec, p(8) p(8) $grc, p(9) p(8) $grc, p(10) p(8) $gec, p(11) p(8) $gec, p(12) p(8) $grc, p(13) p(8) $grc, p(0) p(9) $grc, p(1) p(9) $gec, p(2) p(9) $grc, p(3) p(9) $grc, p(4) p(9) $gec, p(5) p(9) $gec, p(6) p(9) $grc, p(7) p(9) $grc, p(8) p(9) $gec, p(9) p(9) $gec, p(10) p(9) $grc, p(11) p(9) $grc, p(11) p(9) $grc, p(12) p(9) $gec, p(13) p(9) $grc, p(0) p(10) $grc, p(1) p(10) $grc, p(2) p(10) $grc, p(3) p(10) $grc, p(4) p(10) $grc, p(5) p(10) $grc, p(6) p(10) $grc, p(7) p(10) $grc, p(8) p(10) $grc, p(9) p(10) $grc, p(10) p(10) $grc, p(11) p(10) $grc, p(11) p(10) $grc, p(12) p(10) $grc, p(13) p(10) $grc, p(0) p(11) $grc, p(1) p(11) $grc, p(3) p(11) $grc, p(4) p(11) $grc, p(5) p(11) $grc, p(8) p(11) $grc, p(9) p(11) $grc, p(10) p(11) $grc, p(12) p(11) $grc, p(13) p(11) $grc, p(0) p(12) $grc, p(4) p(12) $grc, p(5) p(12) $grc, p(8) p(12) $grc, p(9) p(12) $grc, p(13) p(12) $grc;
+    }

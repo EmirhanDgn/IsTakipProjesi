@@ -1,0 +1,106 @@
+﻿@model IsTakipProjesi.Models.TaskList
+
+@{
+}
+
+<div class="content-wrapper">
+    <section class="content">
+        <br />
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-primary" style="display: block;" id="yeniispage">
+                        <form asp-action="Yeni" method="post">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="inputName">İş Adı</label>
+                                    <input type="text" id="inputName" class="form-control" asp-for="IsAdi">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputDescription">İş Açıklaması</label>
+                                    <textarea id="inputDescription" class="form-control" rows="4" asp-for="Aciklama"></textarea>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-4">
+                                        <label>Başlangıç Tarihi ve Saati</label>
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                            <input type="datetime-local" class="form-control" asp-for="BaslangicTarihi">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label>Bitiş Tarihi ve Saati</label>
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                            <input type="datetime-local" class="form-control" asp-for="BitisTarihi">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-4">
+                                        <label for="inputStatus">Durum</label>
+                                        <select id="inputStatus" class="form-control custom-select" asp-for="Durum">
+                                            <option selected>Bekliyor</option>
+                                            <option>Aktif</option>
+                                            <option>Tamamlandı</option>
+                                            <option>İptal Edildi</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label for="inputOnemDerecesi">Önem Derecesi</label>
+                                        <select id="inputOnemDerecesi" class="form-control custom-select" asp-for="OnemDerecesi">
+                                            <option selected value="1">Çok Düşük</option>
+                                            <option value="2">Düşük</option>
+                                            <option value="3">Orta</option>
+                                            <option value="4">Yüksek</option>
+                                            <option value="5">Çok Yüksek</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Üye Ekle</label>
+                                    <div class="col-sm-9">
+                                        <select class="select2 select3-hidden-accessible" multiple="" data-placeholder="Üye Ekle" style="width: 100%;" tabindex="-1" aria-hidden="true" id="Uyeler" name="Uyeler">
+                                            @foreach (var user in ViewBag.Users)
+                                            {
+                                                <option value="@user.UserId">@user.FullName (@user.Username)</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <hr />
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="card-footer">
+                                <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#modal-kaydet">
+                                    Yeni İşi Kaydet
+                                </button>
+                            </div>
+                            <div class="modal fade" id="modal-kaydet">
+                                <div class="modal-dialog modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Yaptığınız işlemi onaylıyor musunuz?</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+                                            <input type="submit" value="Evet" class="btn btn-success float-right">
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- /.content -->

@@ -1,0 +1,89 @@
+﻿@model IEnumerable<IsTakipProjesi.Models.TaskList>
+
+@{
+}
+
+<div class="content-wrapper">
+    <section class="content">
+        <br />
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    Son 30 listelenmektedir.
+                                    <table id="exhphoto" class="table table-striped projects">
+                                        <thead>
+                                            <tr>
+                                                <th>İş Adı</th>
+                                                <th>Üyeler</th>
+                                                <th>Durum</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var task in Model)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <a><b>#@task.TaskID</b> @task.IsAdi</a>
+                                                        <br>
+                                                        <small>
+                                                            Oluşturma Tarihi: @task.OlusturmaTarihi.ToString("dd.MM.yyyy")
+                                                        </small>
+                                                    </td>
+                                                    <td>
+                                                        <ul class="list-inline">
+                                                            @foreach (var member in task.TaskMembers)
+                                                            {
+                                                                <li class="list-inline-item" data-toggle="tooltip" data-placement="right" title="@Convert.ToString(member.UserID)">
+                                                                    <img alt="@Convert.ToString(member.UserID)" class="table-avatar" src="~/images/avatar4.png">
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        @if (task.Durum == "Tamamlandı")
+                                                        {
+                                                            <span class="badge badge-success">@task.Durum</span>
+                                                        }
+                                                        else if (task.Durum == "Aktif")
+                                                        {
+                                                            <span class="badge badge-info">@task.Durum</span>
+                                                        }
+                                                        else if (task.Durum == "Bekliyor")
+                                                        {
+                                                            <span class="badge badge-primary">@task.Durum</span>
+                                                        }
+                                                        else if (task.Durum == "Askıya Alındı")
+                                                        {
+                                                            <span class="badge badge-secondary">@task.Durum</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            @task.Durum
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        <a class="btn btn-primary btn-sm" href="/IsTakibi/Detay/@task.TaskID">
+                                                            <i class="nav-icon fas fa-book"></i>
+                                                            Detaylar
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,23 @@
+{
+  "name": "BIDB-SYS",
+  "description": "IAU BIDB SYSTEM",
+  "short_name": "BIDB-SYS",
+  "icons": [
+    {
+      "src": "https://sys.aydin.edu.tr/Content/dist/img/bidbsyslogo192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://sys.aydin.edu.tr/Content/dist/img/bidbsyslogo512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "https://sys.aydin.edu.tr",
+  "display": "standalone",
+  "theme_color": "#FFFFFF",
+  "background_color": "#1B3281"
+}
+
+

@@ -1,0 +1,90 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <meta name="Author" content="Emirhan DOĞAN [ emirhandogan07@gmail.com ]">
+    <meta name="description" content="IsTakibi; İş Takibi Yapabileceğiniz Yazılım" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>İş Takip Sistemi :: Giriş</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="~/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/dist/css/adminlte.min.css">
+
+    <link rel="shortcut icon" href="~/dist/img/ico.png" type="image/x-icon" />
+
+
+</head>
+<body style="background-color: #07245E; background-position: center; background-repeat: no-repeat; background-size: cover;" class="hold-transition login-page" id="particles-js">
+
+    <div style="position: absolute; z-index: 1;">
+        <div class="login-box">
+            <!-- /.login-logo -->
+            <div class="card-body">
+
+                <form action="/Auth/Index" method="post">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Kullanıcı Adı" id="username" name="username" required>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" placeholder="Parola" id="password" name="password" required>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- /.col -->
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary btn-block" style="background-color: #081954">Giriş Yap</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <hr />
+                </form>
+
+            </div>
+            <!-- /.card-body -->
+            <!-- /.card -->
+        </div>
+
+    </div>
+
+    <div>
+        <div style="color: #FFFFFF; bottom: 0px; right: 0px; position: fixed;">
+            <small> Bu platformda yapılan tüm işlemler kayıt altına alınmaktadır.</small>
+        </div>
+
+    </div>
+    <!-- /.login-box -->
+    <!-- efekt -->
+    <script src="~/js/particles.js"></script>
+    <script src="~/js/app.js"></script>
+    <!-- jQuery -->
+    <script src="~/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/dist/js/adminlte.min.js"></script>
+    <!-- Efekt -->
+
+
+
+
+</body>
+</html>
