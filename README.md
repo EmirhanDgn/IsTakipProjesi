@@ -51,19 +51,20 @@ IsTakipProjesi
 - └── Program.cs
 
 ## Kullanım
-- Giriş
+
+### Giriş
 - Giriş yaparak mevcut işleri görüntüleyebilir, yeni işler ekleyebilir ve mevcut işleri yönetebilirsiniz.
 
-## Yeni İş Ekleme
+### Yeni İş Ekleme
 - "Yeni İş Ekle" sayfasına giderek yeni bir iş ekleyin.
 - İş adı, açıklama, başlangıç ve bitiş tarihleri, önem derecesi gibi bilgileri doldurun.
 - Üye ekleyerek görevi kiminle birlikte yapacağınızı belirleyin.
 
-## İş Listesi
+### İş Listesi
 - "İş Takip Listesi" sayfasında mevcut işleri görüntüleyin.
 - İşlerin durumlarını ve üyelerini kontrol edin.
 - İlgili işin detaylarını görmek için "Detaylar" butonuna tıklayın.
 
-## İş Detayları
+### İş Detayları
 - İş detayları sayfasında işin tüm bilgilerini görüntüleyin.
 - İşin durumunu değiştirin, yorum ekleyin ve üyeleri düzenleyin.
