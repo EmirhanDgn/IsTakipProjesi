@@ -26,29 +26,29 @@ Bu proje, kullanıcıların iş takibi yapabileceği, görevler oluşturabilece�
 Proje, aşağıdaki gibi katmanlı mimari prensiplerine uygun olarak yapılandırılmıştır:
 
 IsTakipProjesi
-├── Controllers
-│ ├── AuthController.cs
-│ ├── HomeController.cs
-│ ├── IsTakibiController.cs
-│ └── UsersController.cs
-├── Data
-│ └── AppDbContext.cs
-├── Filters
-│ ├── SessionCheckFilter.cs
-│ ├── SkipSessionCheckAttribute.cs
-│ └── SqlInjectionFilter.cs
-├── Migrations
-│ └── <MigrationsFiles>
-├── Models
-│ ├── ErrorViewModel.cs
-│ ├── TaskComment.cs
-│ ├── TaskList.cs
-│ ├── TaskMember.cs
-│ └── User.cs
-├── Views
-│ └── <ViewFiles>
-├── appsettings.json
-└── Program.cs
+- ├── Controllers
+- │ ├── AuthController.cs
+- │ ├── HomeController.cs
+- │ ├── IsTakibiController.cs
+- │ └── UsersController.cs
+- ├── Data
+- │ └── AppDbContext.cs
+- ├── Filters
+- │ ├── SessionCheckFilter.cs
+- │ ├── SkipSessionCheckAttribute.cs
+- │ └── SqlInjectionFilter.cs
+- ├── Migrations
+- │ └── <MigrationsFiles>
+- ├── Models
+- │ ├── ErrorViewModel.cs
+- │ ├── TaskComment.cs
+- │ ├── TaskList.cs
+- │ ├── TaskMember.cs
+- │ └── User.cs
+- ├── Views
+- │ └── <ViewFiles>
+- ├── appsettings.json
+- └── Program.cs
 
 ## Kullanım
 - Giriş
