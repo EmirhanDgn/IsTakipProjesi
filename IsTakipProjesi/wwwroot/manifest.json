@@ -1,7 +1,7 @@
 {
-  "name": "BIDB-SYS",
-  "description": "IAU BIDB SYSTEM",
-  "short_name": "BIDB-SYS",
+  "name": "İş Takip",
+  "description": "İş Takip Sistemi",
+  "short_name": "IsTakip",
   "icons": [
     {
       "src": "https://sys.aydin.edu.tr/Content/dist/img/bidbsyslogo192.png",
@@ -14,7 +14,7 @@
       "type": "image/png"
     }
   ],
-  "start_url": "https://sys.aydin.edu.tr",
+  "start_url": "#",
   "display": "standalone",
   "theme_color": "#FFFFFF",
   "background_color": "#1B3281"
